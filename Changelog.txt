@@ -1,1 +1,3 @@
-* Fixed error where if the file did not exist the file created did not contain a valid json token. Related method: (program.cs/CreateOrReadFile)
+* Major overhaul of code, instead of everything being contained in Program.cs, the code is now separated into different files.
+* Fixed error where if the file did not exist the file created did not contain a valid json token. Related method: (FileHandler.cs/CreateOrReadFile)
+* Added error catch if search failed to find a post. Related method: (BlogHandler.cs/BlogPostSearch)

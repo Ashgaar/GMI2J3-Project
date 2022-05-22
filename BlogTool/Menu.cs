@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlogTool
 {
-    class Menu
+    class Menu : IMenu
     {
         private IBlogHandler _blogHandler;
         public Menu(IBlogHandler blogHandler){
