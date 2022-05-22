@@ -1,0 +1,1 @@
+* Fixed error where if the file did not exist the file created did not contain a valid json token. Related method: (program.cs/CreateOrReadFile)
