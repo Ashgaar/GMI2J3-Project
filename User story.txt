@@ -1,0 +1,1 @@
+As a user I want the blogging tool to bring me to a menu at start and 
