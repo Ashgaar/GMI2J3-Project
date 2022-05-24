@@ -9,8 +9,10 @@ namespace BlogTool
     class Menu : IMenu
     {
         private IBlogHandler _blogHandler;
-        public Menu(IBlogHandler blogHandler){
+        private IInputUtility _inputUtility;
+        public Menu(IBlogHandler blogHandler, IInputUtility inputUtility) { 
             _blogHandler = blogHandler;
+            _inputUtility = inputUtility;
         }
         
         public void MainMenu()
@@ -25,8 +27,8 @@ namespace BlogTool
                 Console.WriteLine("2 - Se tidigare blogginlägg ");
                 Console.WriteLine("3 - Sök tidigare blogginlägg ");
                 Console.WriteLine("4 - Avsluta programmet ");
-                Console.Write("Input: ");
-                string menuChoice = Console.ReadLine();
+                
+                string menuChoice = _inputUtility.Input("Val: ");
 
                 switch (menuChoice)
                 {
@@ -54,18 +56,8 @@ namespace BlogTool
         public void CreationMenu()
         {
             Console.Clear();            
-            Console.Write("Ange rubrik: ");
-            string title = Console.ReadLine();
-            Console.WriteLine("Inlägg: ");
-            string content = Console.ReadLine();
-            if (title.Length == null)
-            {
-                title = "Ingen rubrik";
-            }
-            if (content.Length == null)
-            {
-                content = "Inget inlägg";
-            }
+            string title = _inputUtility.Input("Ange rubrik: ");
+            string content = _inputUtility.Input("Inlägg: ");
             DateTime date = DateTime.Now;
             _blogHandler.BlogPost(title, content,date);
             

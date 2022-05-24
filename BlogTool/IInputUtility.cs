@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace BlogTool
 {
-    internal interface IMenu
+    public interface IInputUtility
     {
-        public void MainMenu();
-        public void CreationMenu();
+        public string Input(string prompt);
     }
 }

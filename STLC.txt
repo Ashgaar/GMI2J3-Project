@@ -1,0 +1,10 @@
+Requirement phase
+
+User story
+
+* Creating post
+
+I want to be able to create a post 
+
+
+* R

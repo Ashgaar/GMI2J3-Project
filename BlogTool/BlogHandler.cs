@@ -13,10 +13,12 @@ namespace BlogTool
         public List<BlogPost> posts = new List<BlogPost>();
         
         private IFileHandler _fileHandler;
+        private IInputUtility _inputUtility;
 
-        public BlogHandler(IFileHandler fileHandler)
+        public BlogHandler(IFileHandler fileHandler, IInputUtility inputUtility)
         {
             _fileHandler = fileHandler;
+            _inputUtility = inputUtility;
             _fileHandler.CreateOrReadFile("./SavedBlogPosts.json");           
             _fileHandler.AddToList(posts);
         }
@@ -60,9 +62,6 @@ namespace BlogTool
             BlogPost post = new BlogPost();
 
             post.Date = date;
-
-            Console.WriteLine("Datum: {0}", date);
-
             post.Title = title;
             post.Content = content;
 
