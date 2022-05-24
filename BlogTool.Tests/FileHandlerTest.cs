@@ -74,12 +74,14 @@ namespace BlogTool.Tests
         [Test]
         public void TestConvertToJson() {
             List<BlogPost> list = new List<BlogPost>();
+            var mockFileSystem = new MockFileSystem();
+            var fileHandler = new FileHandler(mockFileSystem);
             BlogPost blogPost = new BlogPost();
             blogPost.Title = "test";
             blogPost.Content = "testtest";
             blogPost.Date = DateTime.Parse("2020-01-01");
             list.Add(blogPost);
-            var json = System.Text.Json.JsonSerializer.Serialize(list);
+            var json = fileHandler.ConvertToJson(list);
             Assert.AreEqual(@"[{""Date"":""2020-01-01T00:00:00"",""Title"":""test"",""Content"":""testtest""}]", json);
         }  
     }
