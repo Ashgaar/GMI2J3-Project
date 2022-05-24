@@ -8,7 +8,7 @@ namespace BlogTool
 {
     public interface IFileHandler
     {
-        public void WriteAllText(string text);
+        public void WriteAllText(string text, string path);
         public string ConvertToJson(List<BlogPost> list);
         public void ReadJsonFromFile(string path);
         public void CreateOrReadFile(string path);

@@ -40,5 +40,24 @@ namespace BlogTool.Tests
             Assert.AreEqual(list[0].Title, "test");
             Assert.AreEqual(list[0].Content, "testtest");
         }
+
+        [Test]
+        public void TestWriteToFile()
+        {
+            var mockFileSystem = new MockFileSystem();
+            var fileHandler = new FileHandler(mockFileSystem);
+
+            string input = "yes";
+            MockFileData mockInputFile = new MockFileData(input);
+            mockFileSystem.AddFile(@"C:\temp\read.txt", mockInputFile);
+
+            fileHandler.WriteAllText("no",@"C:\temp\read.txt");
+
+            MockFileData mockOutputFile = mockFileSystem.GetFile(@"C:\temp\read.txt");
+
+            string[] output = mockOutputFile.TextContents.Split();
+
+            Assert.AreEqual("no", output[0]);
+        }
     }
 }

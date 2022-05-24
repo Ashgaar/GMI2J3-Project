@@ -25,7 +25,7 @@ namespace BlogTool
         {
             CreatePost(title, content);
             var jsonData = _fileHandler.ConvertToJson(posts);
-            _fileHandler.WriteAllText(jsonData);
+            _fileHandler.WriteAllText(jsonData, "./SavedBlogPosts.json" );
             _fileHandler.ReadJsonFromFile("./SavedBlogPosts.json");
         }
 

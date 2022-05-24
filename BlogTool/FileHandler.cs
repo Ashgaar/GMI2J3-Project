@@ -51,9 +51,8 @@ namespace BlogTool
             string json = JsonSerializer.Serialize(data);
             return json;
         } 
-        public void WriteAllText(string text)
+        public void WriteAllText(string text, string path)
         {
-            string path = "SavedBlogPosts.json";
             _fileSystem.File.WriteAllText(path, text);
         }
 
