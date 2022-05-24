@@ -68,7 +68,10 @@ namespace BlogTool
             post.Content = content;
 
             posts.Add(post);
-            
+            foreach(var i in posts){
+                Console.WriteLine(i);
+            }
+
 
             Console.WriteLine(post);
         }

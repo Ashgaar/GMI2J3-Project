@@ -24,11 +24,9 @@ namespace BlogTool
         List<BlogPost> objs = new List<BlogPost>();
         public void CreateOrReadFile(string path)
         {
-            //string path = "./SavedBlogPosts.json";
-
             if (!_fileSystem.File.Exists(path))
             {
-                using Stream fs = (FileStream)_fileSystem.File.Create(path);
+                using Stream fs = (Stream)_fileSystem.File.Create(path);
                 var data = "[]";
                 byte[] bytes = Encoding.UTF8.GetBytes(data);
                 fs.Write(bytes, 0, bytes.Length);
