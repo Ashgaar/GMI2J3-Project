@@ -12,9 +12,18 @@ namespace BlogTool.Tests
 {
     public class BlogHandlerTest
     {
+        private MockFileSystem _mockFileSystem;
+        private FileHandler _fileHandler;
+        private BlogHandler _blogHandler;
+        private StringWriter _stringWriter;
+
         [SetUp]
         public void Setup()
         {
+            _mockFileSystem = new MockFileSystem();
+            _fileHandler = new FileHandler(_mockFileSystem);
+            _blogHandler = new BlogHandler(_fileHandler);
+            _stringWriter = new StringWriter();
         }
 
 
@@ -22,39 +31,27 @@ namespace BlogTool.Tests
         [Test]
         public void TestBlogPostListEmpty()
         {
-            var mockFileSystem = new MockFileSystem();
-            var fileHandler = new FileHandler(mockFileSystem);
-            var blogHandler = new BlogHandler(fileHandler);
+            Console.SetOut(_stringWriter);
+            _blogHandler.BlogPostList();
 
-            
-            var stringWriter = new StringWriter();
-            Console.SetOut(stringWriter);
-            blogHandler.BlogPostList();
-
-            Assert.AreEqual("Du har inga sparade inlägg. \r\n", stringWriter.ToString());
+            Assert.AreEqual("Du har inga sparade inlägg. \r\n", _stringWriter.ToString());
         }
 
         //mocking console
         [Test]
         public void TestBlogPostList()
         {
-            var mockFileSystem = new MockFileSystem();
-            var fileHandler = new FileHandler(mockFileSystem);
-            var blogHandler = new BlogHandler(fileHandler);
-
             BlogPost blogPost = new BlogPost();
             blogPost.Title = "test";
             blogPost.Content = "testtest";
             blogPost.Date = DateTime.Parse("2020-01-01");
 
-            blogHandler.posts.Add(blogPost);
+            _blogHandler.posts.Add(blogPost);
 
-            var stringWriter = new StringWriter();
-            Console.SetOut(stringWriter);
-            blogHandler.BlogPostList();
+            Console.SetOut(_stringWriter);
+            _blogHandler.BlogPostList();
 
-
-            Assert.AreEqual("Datum: 2020-01-01 Tid: 12:00\nRubrik: test\ntesttest\n\r\n", stringWriter.ToString());
+            Assert.AreEqual("Datum: 2020-01-01 Tid: 12:00\nRubrik: test\ntesttest\n\r\n", _stringWriter.ToString());
         }
     }
 

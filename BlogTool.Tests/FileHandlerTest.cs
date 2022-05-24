@@ -14,10 +14,14 @@ namespace BlogTool.Tests
 {
     internal class FileHandlerTest
     {
+        private MockFileSystem _mockFileSystem;
+        private FileHandler _fileHandler;
+
         [SetUp]
         public void Setup()
         {
-
+            _mockFileSystem = new MockFileSystem();
+            _fileHandler = new FileHandler(_mockFileSystem);
         }
 
 
@@ -25,17 +29,15 @@ namespace BlogTool.Tests
         public void TestReadJsonFromFile()
         {
             List<BlogPost> list = new List<BlogPost>();
-            var mockFileSystem = new MockFileSystem();
-            var fileHandler = new FileHandler(mockFileSystem);
             
             string input = "[{\"Title\":\"test\",\"Content\":\"testtest\"}]";
             var fInput = input.Replace(@"\","");
             var mockInputFile = new MockFileData(fInput);
 
-            mockFileSystem.AddFile(@"C:\temp\in.txt", mockInputFile);
+            _mockFileSystem.AddFile(@"C:\temp\in.txt", mockInputFile);
 
-            fileHandler.ReadJsonFromFile(@"C:\temp\in.txt");
-            fileHandler.AddToList(list);
+            _fileHandler.ReadJsonFromFile(@"C:\temp\in.txt");
+            _fileHandler.AddToList(list);
 
             Assert.AreEqual(list[0].Title, "test");
             Assert.AreEqual(list[0].Content, "testtest");
@@ -44,16 +46,13 @@ namespace BlogTool.Tests
         [Test]
         public void TestWriteToFile()
         {
-            var mockFileSystem = new MockFileSystem();
-            var fileHandler = new FileHandler(mockFileSystem);
-
             string input = "yes";
             MockFileData mockInputFile = new MockFileData(input);
-            mockFileSystem.AddFile(@"C:\temp\read.txt", mockInputFile);
+            _mockFileSystem.AddFile(@"C:\temp\read.txt", mockInputFile);
 
-            fileHandler.WriteAllText("no",@"C:\temp\read.txt");
+            _fileHandler.WriteAllText("no",@"C:\temp\read.txt");
 
-            MockFileData mockOutputFile = mockFileSystem.GetFile(@"C:\temp\read.txt");
+            MockFileData mockOutputFile = _mockFileSystem.GetFile(@"C:\temp\read.txt");
 
             string[] output = mockOutputFile.TextContents.Split();
 
@@ -63,25 +62,21 @@ namespace BlogTool.Tests
         [Test]
         public void TestCreateFile()
         {
-            var mockFileSystem = new MockFileSystem();
-            var fileHandler = new FileHandler(mockFileSystem);
             string path = @"C:\temp\create.txt";
-            fileHandler.CreateOrReadFile(path);
+            _fileHandler.CreateOrReadFile(path);
 
-            Assert.IsTrue(mockFileSystem.FileExists(@"C:\temp\create.txt"));
+            Assert.IsTrue(_mockFileSystem.FileExists(@"C:\temp\create.txt"));
         }
 
         [Test]
         public void TestConvertToJson() {
             List<BlogPost> list = new List<BlogPost>();
-            var mockFileSystem = new MockFileSystem();
-            var fileHandler = new FileHandler(mockFileSystem);
             BlogPost blogPost = new BlogPost();
             blogPost.Title = "test";
             blogPost.Content = "testtest";
             blogPost.Date = DateTime.Parse("2020-01-01");
             list.Add(blogPost);
-            var json = fileHandler.ConvertToJson(list);
+            var json = _fileHandler.ConvertToJson(list);
             Assert.AreEqual(@"[{""Date"":""2020-01-01T00:00:00"",""Title"":""test"",""Content"":""testtest""}]", json);
         }  
     }
