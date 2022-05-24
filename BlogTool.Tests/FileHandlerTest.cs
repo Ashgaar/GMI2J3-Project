@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using System.IO.Abstractions.TestingHelpers;
 using BlogTool;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace BlogTool.Tests
 {
@@ -14,32 +17,28 @@ namespace BlogTool.Tests
         [SetUp]
         public void Setup()
         {
-            
+
         }
 
-        //[Test]
-        //public void Test1()
-        //{
-        //    Assert.Pass();
-        //}
 
         [Test]
         public void TestReadFromFile()
         {
-            List<BlogPost> mm = new List<BlogPost>();            
+            List<BlogPost> list = new List<BlogPost>();
             var mockFileSystem = new MockFileSystem();
-            var mockInputFile = new MockFileData("[{ \"Date \": \"2022 - 05 - 24T11: 48:18.4018147 + 02:00 \",  \"Title \": \"yes \",  \"Content \": \"yesyesyse\"}]");
+            var fileHandler = new FileHandler(mockFileSystem);
+            
+            string input = "[{\"Title\":\"test\",\"Content\":\"testtest\"}]";
+            var iinput = input.Replace(@"\","");
+            var mockInputFile = new MockFileData(iinput);
 
-            mockFileSystem.AddFile(@"C:\temp\test.json", mockInputFile);
+            mockFileSystem.AddFile(@"C:\temp\in.txt", mockInputFile);
 
-            var sut = new FileHandler(mockFileSystem);
-            sut.ReadJsonFromFile(@"C:\temp\test.json");
-            sut.AddToList(mm);
+            fileHandler.ReadJsonFromFile(@"C:\temp\in.txt");
+            fileHandler.AddToList(list);
 
-            //MockFileData mockOutputFile = mockFileSystem.GetFile(@"C:\temp\test.json");
-            //mm[0].Title = "yes";
-
-            Assert.AreEqual("yes", mm[0]);
+            Assert.AreEqual(list[0].Title, "test");
+            Assert.AreEqual(list[0].Content, "testtest");
         }
     }
 }

@@ -8,10 +8,10 @@ namespace BlogTool
 {
     internal interface IBlogHandler
     {
-        public void BlogPost();
+        public void BlogPost(string title, string content);
         public void BlogPostList();
         public void BlogPostSearch();
-        public void CreatePost();
+        public void CreatePost(string title, string content);
 
     }
 }

@@ -8,7 +8,7 @@ using System.IO;
 
 namespace BlogTool
 {
-    class BlogHandler : IBlogHandler
+    public class BlogHandler : IBlogHandler
     {
         static List<BlogPost> posts = new List<BlogPost>();
         
@@ -21,9 +21,9 @@ namespace BlogTool
             _fileHandler.AddToList(posts);
         }
 
-        public void BlogPost()
+        public void BlogPost(string title, string content)
         {
-            CreatePost();
+            CreatePost(title, content);
             var jsonData = _fileHandler.ConvertToJson(posts);
             _fileHandler.WriteAllText(jsonData);
             _fileHandler.ReadJsonFromFile("./SavedBlogPosts.json");
@@ -54,10 +54,8 @@ namespace BlogTool
                 Console.WriteLine($"Inget inlägg med titeln " + search + " hittades.");
             }
         }
-        public void CreatePost()
+        public void CreatePost(string title, string content)
         {
-            Console.Clear();
-
             BlogPost post = new BlogPost();
 
             DateTime date = DateTime.Now;
@@ -66,11 +64,8 @@ namespace BlogTool
 
             Console.WriteLine("Datum: {0}", date);
 
-            Console.Write("Ange rubrik: ");
-            post.Title = Console.ReadLine();
-
-            Console.WriteLine("Inlägg: ");
-            post.Content = Console.ReadLine();
+            post.Title = title;
+            post.Content = content;
 
             posts.Add(post);
             

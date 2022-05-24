@@ -31,7 +31,7 @@ namespace BlogTool
                 switch (menuChoice)
                 {
                     case "1":
-                        _blogHandler.BlogPost();
+                        CreationMenu();
                         break;
                     case "2":
                         _blogHandler.BlogPostList();
@@ -49,6 +49,25 @@ namespace BlogTool
                         break;
                 }
             }
+        }
+
+        public void CreationMenu()
+        {
+            Console.Clear();            
+            Console.Write("Ange rubrik: ");
+            string title = Console.ReadLine();
+            Console.WriteLine("Inlägg: ");
+            string content = Console.ReadLine();
+            if (title.Length == null)
+            {
+                title = "Ingen rubrik";
+            }
+            if (content.Length == null)
+            {
+                content = "Inget inlägg";
+            }
+            _blogHandler.BlogPost(title, content);
+            
         }
     }
 }

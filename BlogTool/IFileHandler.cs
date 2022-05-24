@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlogTool
 {
-    internal interface IFileHandler
+    public interface IFileHandler
     {
         public void WriteAllText(string text);
         public string ConvertToJson(List<BlogPost> list);
