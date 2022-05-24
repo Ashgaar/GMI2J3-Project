@@ -17,9 +17,8 @@ namespace BlogTool
         public BlogHandler(IFileHandler fileHandler)
         {
             _fileHandler = fileHandler;
-            _fileHandler.CreateOrReadFile();           
+            _fileHandler.CreateOrReadFile("./SavedBlogPosts.json");           
             _fileHandler.AddToList(posts);
-            Console.WriteLine(posts.Count);
         }
 
         public void BlogPost()
@@ -27,7 +26,7 @@ namespace BlogTool
             CreatePost();
             var jsonData = _fileHandler.ConvertToJson(posts);
             _fileHandler.WriteAllText(jsonData);
-            _fileHandler.ReadJsonFromFile();
+            _fileHandler.ReadJsonFromFile("./SavedBlogPosts.json");
         }
 
         public void BlogPostList()

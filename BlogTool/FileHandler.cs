@@ -6,35 +6,43 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.IO.Abstractions;
 
 namespace BlogTool
 {
-    class FileHandler : IFileHandler
+    public class FileHandler : IFileHandler
     {
-        static List<BlogPost> objs = new List<BlogPost>();
-        public void CreateOrReadFile()
-        {
-            string path = "./SavedBlogPosts.json";
 
-            if (!File.Exists(path))
+        private readonly IFileSystem _fileSystem;
+
+
+        public FileHandler(IFileSystem fileSystem)
+        {
+            _fileSystem = fileSystem;
+        }
+
+        List<BlogPost> objs = new List<BlogPost>();
+        public void CreateOrReadFile(string path)
+        {
+            //string path = "./SavedBlogPosts.json";
+
+            if (!_fileSystem.File.Exists(path))
             {
-                using FileStream fs = File.Create(path);
+                using Stream fs = (FileStream)_fileSystem.File.Create(path);
                 var data = "[]";
                 byte[] bytes = Encoding.UTF8.GetBytes(data);
                 fs.Write(bytes, 0, bytes.Length);
             }
             else
             {
-                ReadJsonFromFile();
+                ReadJsonFromFile(path);
             }
         }
 
-        public void ReadJsonFromFile()
+        public void ReadJsonFromFile(string path)
         {
-            string path = "./SavedBlogPosts.json";
-            
-            string json = File.ReadAllText(path);
-            
+            string json = _fileSystem.File.ReadAllText(path);
+
             objs = JsonSerializer.Deserialize<List<BlogPost>>(json);
         }
 
@@ -42,11 +50,11 @@ namespace BlogTool
         {
             string json = JsonSerializer.Serialize(data);
             return json;
-        }
+        } 
         public void WriteAllText(string text)
         {
             string path = "SavedBlogPosts.json";
-            File.WriteAllText(path, text);
+            _fileSystem.File.WriteAllText(path, text);
         }
 
         public void AddToList(List<BlogPost> list)

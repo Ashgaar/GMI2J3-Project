@@ -5,6 +5,7 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.IO;
+using System.IO.Abstractions;
 
 namespace BlogTool
 {
@@ -12,7 +13,7 @@ namespace BlogTool
     {
         static void Main(string[] args)
         {
-            var fileHandler = new FileHandler();
+            var fileHandler = new FileHandler(fileSystem: new FileSystem());
             var blogHandler = new BlogHandler(fileHandler);
             var menu = new Menu(blogHandler);
 
