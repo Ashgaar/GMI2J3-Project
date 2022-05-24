@@ -66,7 +66,8 @@ namespace BlogTool
             {
                 content = "Inget inlägg";
             }
-            _blogHandler.BlogPost(title, content);
+            DateTime date = DateTime.Now;
+            _blogHandler.BlogPost(title, content,date);
             
         }
     }

@@ -24,6 +24,7 @@ namespace BlogTool.Tests
             _fileHandler = new FileHandler(_mockFileSystem);
             _blogHandler = new BlogHandler(_fileHandler);
             _stringWriter = new StringWriter();
+            Console.SetOut(_stringWriter);
         }
 
 
@@ -31,7 +32,6 @@ namespace BlogTool.Tests
         [Test]
         public void TestBlogPostListEmpty()
         {
-            Console.SetOut(_stringWriter);
             _blogHandler.BlogPostList();
 
             Assert.AreEqual("Du har inga sparade inlägg. \r\n", _stringWriter.ToString());
@@ -48,12 +48,19 @@ namespace BlogTool.Tests
 
             _blogHandler.posts.Add(blogPost);
 
-            Console.SetOut(_stringWriter);
             _blogHandler.BlogPostList();
 
             Assert.AreEqual("Datum: 2020-01-01 Tid: 12:00\nRubrik: test\ntesttest\n\r\n", _stringWriter.ToString());
         }
-    }
 
+        [Test]
+        public void TestCreatePost()
+        {
+            _blogHandler.CreatePost("test","testtest", DateTime.Parse("2020-01-01"));
+
+            Assert.AreEqual("Datum: 2020-01-01 00:00:00\r\nDatum: 2020-01-01 Tid: 12:00\nRubrik: test\ntesttest\n\r\n", _stringWriter.ToString());
+            Assert.AreEqual(1, _blogHandler.posts.Count);
+        }
+    }
 }
 

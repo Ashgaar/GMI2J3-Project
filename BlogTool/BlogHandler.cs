@@ -21,9 +21,9 @@ namespace BlogTool
             _fileHandler.AddToList(posts);
         }
 
-        public void BlogPost(string title, string content)
+        public void BlogPost(string title, string content,DateTime date)
         {
-            CreatePost(title, content);
+            CreatePost(title, content,date );
             var jsonData = _fileHandler.ConvertToJson(posts);
             _fileHandler.WriteAllText(jsonData, "./SavedBlogPosts.json" );
             _fileHandler.ReadJsonFromFile("./SavedBlogPosts.json");
@@ -55,11 +55,9 @@ namespace BlogTool
                 Console.WriteLine($"Inget inlägg med titeln " + search + " hittades.");
             }
         }
-        public void CreatePost(string title, string content)
+        public void CreatePost(string title, string content, DateTime date)
         {
             BlogPost post = new BlogPost();
-
-            DateTime date = DateTime.Now;
 
             post.Date = date;
 
@@ -69,10 +67,6 @@ namespace BlogTool
             post.Content = content;
 
             posts.Add(post);
-            foreach(var i in posts){
-                Console.WriteLine(i);
-            }
-
 
             Console.WriteLine(post);
         }
