@@ -10,7 +10,7 @@ namespace BlogTool
 {
     public class BlogHandler : IBlogHandler
     {
-        static List<BlogPost> posts = new List<BlogPost>();
+        public List<BlogPost> posts = new List<BlogPost>();
         
         private IFileHandler _fileHandler;
 
@@ -40,6 +40,7 @@ namespace BlogTool
                 posts.ForEach(Console.WriteLine);
             }
         }
+        
         public void BlogPostSearch()
         {
             Console.Write("Skriv titel: ");
