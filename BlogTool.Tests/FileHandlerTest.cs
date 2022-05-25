@@ -9,6 +9,7 @@ using BlogTool;
 using System.Text.Json;
 using Newtonsoft.Json;
 using System.Text.Json.Serialization;
+using System.IO;
 
 namespace BlogTool.Tests
 {
@@ -78,13 +79,23 @@ namespace BlogTool.Tests
             list.Add(blogPost);
             var json = _fileHandler.ConvertToJson(list);
             Assert.AreEqual(@"[{""Date"":""2020-01-01T00:00:00"",""Title"":""test"",""Content"":""testtest""}]", json);
-        }  
+        }
+        
+        [Test]
+        public void TestReadFromFileIfFileExists()
+        {
+            List<BlogPost> list = new List<BlogPost>();
+            string input = "[{\"Title\":\"test\",\"Content\":\"testtest\"}]";
+            var fInput = input.Replace(@"\", "");
+            var mockInputFile = new MockFileData(fInput);
+            _mockFileSystem.AddFile(@"C:\temp\alreadyexists.txt", mockInputFile);
 
-        //[Test]
-        //public void TestReadFromFileIfFileExists()
-        //{
-        //    input
-            
-        //}
+            _fileHandler.CreateOrReadFile(@"C:\temp\alreadyexists.txt");
+            _fileHandler.AddToList(list);
+
+            Assert.AreEqual(list[0].Title, "test");
+            Assert.AreEqual(list[0].Content, "testtest");
+
+        }
     }
 }
