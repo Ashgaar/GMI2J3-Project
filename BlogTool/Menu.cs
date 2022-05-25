@@ -10,11 +10,12 @@ namespace BlogTool
     {
         private IBlogHandler _blogHandler;
         private IInputUtility _inputUtility;
-        public Menu(IBlogHandler blogHandler, IInputUtility inputUtility) { 
+        public Menu(IBlogHandler blogHandler, IInputUtility inputUtility)
+        {
             _blogHandler = blogHandler;
             _inputUtility = inputUtility;
         }
-        
+
         public void MainMenu()
         {
             Console.WriteLine("Hej och välkommen till Blogg-verktyget! ");
@@ -27,7 +28,7 @@ namespace BlogTool
                 Console.WriteLine("2 - Se tidigare blogginlägg ");
                 Console.WriteLine("3 - Sök tidigare blogginlägg ");
                 Console.WriteLine("4 - Avsluta programmet ");
-                
+
                 string menuChoice = _inputUtility.Input("Val: ");
 
                 switch (menuChoice)
@@ -39,7 +40,7 @@ namespace BlogTool
                         _blogHandler.BlogPostList();
                         break;
                     case "3":
-                        _blogHandler.BlogPostSearch();
+                        SearchMenu();
                         break;
                     case "4":
                         Console.WriteLine("Avslutar programmet - Tack och hej!");
@@ -55,12 +56,19 @@ namespace BlogTool
 
         public void CreationMenu()
         {
-            Console.Clear();            
+            Console.Clear();
             string title = _inputUtility.Input("Ange rubrik: ");
             string content = _inputUtility.Input("Inlägg: ");
             DateTime date = DateTime.Now;
-            _blogHandler.BlogPost(title, content,date, "./SavedBlogPosts.json");
-            
+            _blogHandler.BlogPost(title, content, date, "./SavedBlogPosts.json");
+
+        }
+
+        public void SearchMenu()
+        {
+            Console.Clear();
+            string search = _inputUtility.Input("Skriv titel: ");
+            _blogHandler.BlogPostSearch(search);
         }
     }
 }

@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System.IO.Abstractions.TestingHelpers;
 using System.Diagnostics;
 using System.IO;
+using Moq;
 
 namespace BlogTool.Tests
 {
@@ -59,6 +60,50 @@ namespace BlogTool.Tests
             Assert.AreEqual("Datum: 2020-01-01 Tid: 12:00\nRubrik: test\ntesttest\n\r\n", _stringWriter.ToString());
             Assert.AreEqual(1, _blogHandler.posts.Count);
         }
+
+        [Test]
+        public void TestCreatePostEmptyTitle()
+        {
+            _blogHandler.CreatePost("", "testtest", DateTime.Parse("2020-01-01"));
+
+            Assert.AreEqual("Datum: 2020-01-01 Tid: 12:00\nRubrik: \ntesttest\n\r\n", _stringWriter.ToString());
+        }
+
+        [Test]
+        public void TestCreatePostEmptyContent()
+        {
+            _blogHandler.CreatePost("test", "", DateTime.Parse("2020-01-01"));
+
+            Assert.AreEqual("Datum: 2020-01-01 Tid: 12:00\nRubrik: test\n\n\r\n", _stringWriter.ToString());
+        }
+
+        [Test]
+        public void TestCreatePostEmptyTitleAndContent()
+        {
+            _blogHandler.CreatePost("", "", DateTime.Parse("2020-01-01"));
+
+            Assert.AreEqual("Datum: 2020-01-01 Tid: 12:00\nRubrik: \n\n\r\n", _stringWriter.ToString());
+        }
+
+        [Test]
+        public void TestBlogPostSearch()
+        {
+            BlogPost blogPost = new BlogPost();
+            blogPost.Title = "test";
+            blogPost.Content = "testtest";
+            blogPost.Date = DateTime.Parse("2020-01-01");
+            _blogHandler.posts.Add(blogPost);
+            _blogHandler.BlogPostSearch("test");
+
+            Assert.AreEqual("Datum: 2020-01-01 Tid: 12:00\nRubrik: test\ntesttest\n\r\n", _stringWriter.ToString());
+        }
+
+        [Test]
+        public void TestBlogPostSearchEmpty()
+        {
+            _blogHandler.BlogPostSearch("test");
+
+            Assert.AreEqual("Inget inlägg med titeln test hittades.\r\n", _stringWriter.ToString());
+        }
     }
 }
-

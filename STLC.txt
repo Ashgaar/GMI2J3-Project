@@ -4,7 +4,18 @@ User story
 
 * Creating post
 
-I want to be able to create a post 
+I want to be able to create a blog post, I would hope that the program never crashes. Creating a post should be user friendly and it should always be clear in which step of the process I am in creating a post.
+
+* Listing all posts
+
+I want to be able to see all the old and new posts created in a list.
+
+* Searching for post
+
+I want to be able to search for specific posts and only read them, as opposed to showing all the posts in the previous story.
+
+* The posts should be saved to file
+
+I want to save the posts to a file locally and they should be stored in json format.
 
 
-* R

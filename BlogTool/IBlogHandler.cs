@@ -10,7 +10,7 @@ namespace BlogTool
     {
         public void BlogPost(string title, string content,DateTime date, string path);
         public void BlogPostList();
-        public void BlogPostSearch();
+        public void BlogPostSearch(string search);
         public void CreatePost(string title, string content,DateTime date);
 
     }
