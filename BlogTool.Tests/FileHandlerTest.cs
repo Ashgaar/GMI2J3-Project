@@ -95,7 +95,6 @@ namespace BlogTool.Tests
 
             Assert.AreEqual(list[0].Title, "test");
             Assert.AreEqual(list[0].Content, "testtest");
-
         }
     }
 }
