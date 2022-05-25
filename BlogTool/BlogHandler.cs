@@ -23,12 +23,12 @@ namespace BlogTool
             _fileHandler.AddToList(posts);
         }
 
-        public void BlogPost(string title, string content,DateTime date)
+        public void BlogPost(string title, string content,DateTime date, string path)
         {
             CreatePost(title, content,date );
             var jsonData = _fileHandler.ConvertToJson(posts);
-            _fileHandler.WriteAllText(jsonData, "./SavedBlogPosts.json" );
-            _fileHandler.ReadJsonFromFile("./SavedBlogPosts.json");
+            _fileHandler.WriteAllText(jsonData, path );
+            _fileHandler.ReadJsonFromFile(path);
         }
 
         public void BlogPostList()
@@ -45,9 +45,7 @@ namespace BlogTool
         
         public void BlogPostSearch()
         {
-            Console.Write("Skriv titel: ");
-            
-            string search = Console.ReadLine();
+            string search = _inputUtility.Input("Skriv titel: ");
             try {
                 int i = posts.FindIndex(x => x.Title.Contains(search));
                 Console.WriteLine(posts[i]);

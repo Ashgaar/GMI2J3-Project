@@ -59,7 +59,7 @@ namespace BlogTool
             string title = _inputUtility.Input("Ange rubrik: ");
             string content = _inputUtility.Input("Inlägg: ");
             DateTime date = DateTime.Now;
-            _blogHandler.BlogPost(title, content,date);
+            _blogHandler.BlogPost(title, content,date, "./SavedBlogPosts.json");
             
         }
     }
