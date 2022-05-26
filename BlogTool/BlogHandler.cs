@@ -13,12 +13,11 @@ namespace BlogTool
         public List<BlogPost> posts = new List<BlogPost>();
         
         private IFileHandler _fileHandler;
-        private IInputUtility _inputUtility;
 
-        public BlogHandler(IFileHandler fileHandler, IInputUtility inputUtility)
+        public BlogHandler(IFileHandler fileHandler)
         {
             _fileHandler = fileHandler;
-            _inputUtility = inputUtility;
+            
             _fileHandler.CreateOrReadFile("./SavedBlogPosts.json");           
             _fileHandler.AddToList(posts);
         }
@@ -45,7 +44,6 @@ namespace BlogTool
         
         public void BlogPostSearch(string search)
         {
-            //string search = _inputUtility.Input("Skriv titel: ");
             try {
                 int i = posts.FindIndex(x => x.Title.Contains(search));
                 Console.WriteLine(posts[i]);
