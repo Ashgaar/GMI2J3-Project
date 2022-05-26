@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlogTool
 {
-    internal interface IBlogHandler
+    public interface IBlogHandler
     {
         public void BlogPost(string title, string content,DateTime date, string path);
         public void BlogPostList();

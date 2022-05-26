@@ -24,7 +24,7 @@ namespace BlogTool.Tests
         {
             _mockFileSystem = new MockFileSystem();
             _fileHandler = new FileHandler(_mockFileSystem);
-            _blogHandler = new BlogHandler(_fileHandler,inputUtility);
+            _blogHandler = new BlogHandler(_fileHandler);
             _stringWriter = new StringWriter();
             Console.SetOut(_stringWriter);
         }
