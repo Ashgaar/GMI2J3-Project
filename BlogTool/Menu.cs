@@ -34,12 +34,14 @@ namespace BlogTool
                 switch (menuChoice)
                 {
                     case "1":
+                        Console.Clear();
                         CreationMenu();
                         break;
                     case "2":
                         _blogHandler.BlogPostList();
                         break;
                     case "3":
+                        Console.Clear();
                         SearchMenu();
                         break;
                     case "4":
@@ -66,7 +68,6 @@ namespace BlogTool
 
         public void SearchMenu()
         {
-            Console.Clear();
             string search = _inputUtility.Input("Skriv titel: ");
             _blogHandler.BlogPostSearch(search);
         }

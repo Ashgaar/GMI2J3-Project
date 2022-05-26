@@ -15,7 +15,7 @@ namespace BlogTool
         {
             var inputUility = new InputUtility();
             var fileHandler = new FileHandler(fileSystem: new FileSystem());
-            var blogHandler = new BlogHandler(fileHandler,inputUility);
+            var blogHandler = new BlogHandler(fileHandler);
             var menu = new Menu(blogHandler,inputUility);
 
             menu.MainMenu();
