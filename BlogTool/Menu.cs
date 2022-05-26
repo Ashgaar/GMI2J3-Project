@@ -58,7 +58,6 @@ namespace BlogTool
 
         public void CreationMenu()
         {
-            Console.Clear();
             string title = _inputUtility.Input("Ange rubrik: ");
             string content = _inputUtility.Input("Inlägg: ");
             DateTime date = DateTime.Now;
