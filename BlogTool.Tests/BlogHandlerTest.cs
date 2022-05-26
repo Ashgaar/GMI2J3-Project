@@ -105,5 +105,18 @@ namespace BlogTool.Tests
 
             Assert.AreEqual("Inget inlägg med titeln test hittades.\r\n", _stringWriter.ToString());
         }
+
+        [Test]
+        public void TestBlogPostSearchFailed()
+        {
+            BlogPost blogPost = new BlogPost();
+            blogPost.Title = "test";
+            blogPost.Content = "testtest";
+            blogPost.Date = DateTime.Parse("2020-01-01");
+            _blogHandler.posts.Add(blogPost);
+            _blogHandler.BlogPostSearch("yes");
+
+            Assert.AreEqual("Inget inlägg med titeln yes hittades.\r\n", _stringWriter.ToString());
+        }
     }
 }

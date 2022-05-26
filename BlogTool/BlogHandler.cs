@@ -62,7 +62,7 @@ namespace BlogTool
             post.Content = content;
 
             posts.Add(post);
-
+            
             Console.WriteLine(post);
         }
     }
